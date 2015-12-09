@@ -1,4 +1,5 @@
 // tessera project main.go
+
 package main
 	
 import (
@@ -10,8 +11,13 @@ import (
 	"gopkg.in/mgo.v2/bson"
 	"html/template"
 )
-var t = template.Must(template.ParseFiles("docu/tessera.html"))
-var t1 = template.Must(template.ParseFiles("docu/upload.html"))
+
+//Templates erstellen und auf Fehler überprüfen 
+var t = template.Must(template.ParseFiles("temp/index.html"))
+var t1 = template.Must(template.ParseFiles("temp/upload.html"))
+var t3 = template.Must(template.ParseFiles("temp/main.html"))
+var terr = template.Must(template.ParseFiles("temp/error.html"))
+
 func main() {
 	//Verbindug mit der DB 
 	
@@ -42,14 +48,14 @@ func main() {
 	
 	var doc3 = user {bson.NewObjectId(), "Foxi", "44"}
 	
-	err = coll.Insert(doc3)	// beliebig lange Liste
+	err = coll.Insert(doc3)	// kann eine beliebig lange Liste enthalten 
 	check(err)
 	
-	//http.Handle("/static", http.FileServer(http.Dir("/docu/")))
-		
-	//http.Handle("/", http.FileServer(http.Dir("./docu/tessera.css")))
 	http.HandleFunc("/regist", response)
 	http.HandleFunc("/upload", upload)
+	http.HandleFunc("/main", htmain)
+	http.Handle("/", http.FileServer(http.Dir("./")))
+	
 	
 	http.ListenAndServe(":4242", nil)
 	
@@ -57,17 +63,28 @@ func main() {
 	err = db.DropDatabase()
 	check(err)
 }
-
+func htmain(w http.ResponseWriter, r *http.Request){
+	switch r.Method{
+		case "GET":
+			t3.ExecuteTemplate(w, "main.html", nil)
+		default: 
+			terr.ExecuteTemplate(w, "error.html", nil)		
+	}
+}
 func response(w http.ResponseWriter, r *http.Request){
+	r.ParseForm()
+	
 	switch r.Method{
 		case "GET": 
-			t.ExecuteTemplate(w ,"tessera.html", nil)	
+			t.ExecuteTemplate(w ,"index.html", nil)	
 		case "POST":
-			t.ExecuteTemplate(w, "tessera.html",  "Erfolg")
+			t.ExecuteTemplate(w, "index.html", r.FormValue("name"))
 	}
 }
 
 func upload(w http.ResponseWriter, r *http.Request){
+	
+	//Aus der Vorlesungsfolie 
 	
 	switch r.Method {
 	case "GET": // erster Aufruf ist GET -> http://localhost:4242/upload
