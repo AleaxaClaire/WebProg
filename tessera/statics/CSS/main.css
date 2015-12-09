@@ -1,0 +1,39 @@
+body{
+	background-color:lightgray;
+}
+h1{
+	text-align:center;
+	color:darkred;
+	font-size: 78px;
+	}
+.label{
+	text-align:left;
+	display:inline-block;
+	width:150px;
+}
+.field{
+	text-align:center;
+	width:50%; 
+	left:25%;
+}
+#form{
+	text-align:center; 
+}
+#text{
+	font-size: 36px;
+	text-align:right;
+	color: maroon;
+	background-color: red;
+}
+#log{
+	text-align: right;
+	float: right;
+	color: blue;
+	background-color: black;
+}
+#log2{
+	text-align: right;
+	float: right;
+	color: blue;
+	background-color: black;
+}

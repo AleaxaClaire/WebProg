@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- Tessera upload Test-->
+<html>
+  <head>
+    <title>Tessera Upload</title>
+	<style>
+	body{
+		background-color:lightgray;
+	} 
+	h2{
+		text-align:center;
+		color:darkred;
+		font-size: 50px;
+	}
+	#some{
+		text-align: center;
+		float:right; 	
+	}
+	#navi{
+		text-align:center;
+		float:left; 
+	}
+	</style>
+	<!--<script src="docu/tessera.js" language="javascript" type="text/javascript"> 
+	</script> -->
+  </head>
+  <body>
+      <h2>File Upload</h2>
+	<hr/>
+      <div>{{.}}</div>
+      <form id="some" method="post" action="/upload" enctype="multipart/form-data">
+          <fieldset id="some">
+            <input type="file" name="myfiles" id="myfiles" multiple="multiple">
+            <input type="submit" name="submit" value="upload">
+        </fieldset>
+      </form>
+	<div id="navi">
+		<nav>
+			<ul>
+			<a href=#> Upload </li>
+			</ul>	
+		</nav>	 
+	</div>
+  </body>
+</html>
